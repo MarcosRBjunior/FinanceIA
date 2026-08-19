@@ -1,5 +1,5 @@
 import type { Metrics } from '../types/api';
-import { formatMs, formatPercent, formatUSD } from '../lib/format';
+import { formatMs, formatPercentValue, formatUSD } from '../lib/format';
 
 interface MetricCardsProps {
   metrics: Metrics;
@@ -15,12 +15,12 @@ export function MetricCards({ metrics }: MetricCardsProps) {
   const cards: CardDef[] = [
     {
       label: 'Acurácia',
-      value: metrics.accuracy != null ? formatPercent(metrics.accuracy) : '—',
+      value: metrics.accuracy != null ? formatPercentValue(metrics.accuracy) : '—',
       hint: 'harness de avaliação (Fase 5)',
     },
     {
       label: 'Resolvido sem LLM',
-      value: formatPercent(metrics.resolvedWithoutLlmPct),
+      value: formatPercentValue(metrics.resolvedWithoutLlmPct),
       hint: 'cache + regras determinísticas',
     },
     {
