@@ -25,7 +25,7 @@ export function MetricCards({ metrics }: MetricCardsProps) {
     },
     {
       label: 'Latência média',
-      value: formatMs(metrics.avgLatencyMs),
+      value: metrics.avgLatencyMs != null ? formatMs(metrics.avgLatencyMs) : '—',
       hint: `${metrics.totalClassified} classificações`,
     },
     {

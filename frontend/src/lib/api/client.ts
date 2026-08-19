@@ -1,4 +1,5 @@
 import type {
+  Classification,
   ClassificationWithTransaction,
   CreateTransactionInput,
   CreateTransactionResult,
@@ -14,9 +15,7 @@ export interface ApiClient {
   createTransaction(input: CreateTransactionInput): Promise<CreateTransactionResult>;
   createTransactionsBatch(inputs: CreateTransactionInput[]): Promise<CreateTransactionResult[]>;
   listClassificationsNeedingReview(): Promise<ClassificationWithTransaction[]>;
-  patchClassification(
-    id: string,
-    input: PatchClassificationInput,
-  ): Promise<ClassificationWithTransaction>;
+  // PATCH /classifications/:id não faz join com transactions no backend — retorna só a classification.
+  patchClassification(id: string, input: PatchClassificationInput): Promise<Classification>;
   getMetrics(): Promise<Metrics>;
 }

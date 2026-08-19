@@ -78,7 +78,8 @@ export interface Metrics {
   accuracy: number | null;
   totalClassified: number;
   resolvedWithoutLlmPct: number;
-  avgLatencyMs: number;
+  // null quando nenhuma classificação registrou latência (ex: tudo resolvido via cache/regras).
+  avgLatencyMs: number | null;
   estimatedCostUsd: number;
   sourceBreakdown: Record<ClassificationSource, number>;
   spendingByCategory: SpendingByCategory;
