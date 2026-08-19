@@ -3,3 +3,4 @@ dist/
 .env
 *.log
 coverage/
+eval_labels_para_rotular.csv
