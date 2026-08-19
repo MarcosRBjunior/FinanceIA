@@ -104,7 +104,7 @@ Detalhes de cada endpoint da API em `backend/README.md`.
 
 ![Dashboard do Classificador de Transações](docs/dashboard.jpg)
 
-Dashboard (Fase 7) rodando com o client mock do frontend — cards de métricas, gráfico de gastos por categoria e fila de revisão com correção em um clique. Validado localmente também contra a API real (backend + frontend integrados no mesmo repositório); screenshot contra dados reais pendente de atualização.
+Dashboard (Fase 7) rodando contra a API real (backend + frontend integrados no mesmo repositório) — cards de métricas, gráfico de gastos por categoria e fila de revisão com correção em um clique.
 
 ## Resultados da avaliação
 
