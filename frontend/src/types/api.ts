@@ -32,8 +32,9 @@ export interface Transaction {
 export interface Classification {
   id: string;
   transactionId: string;
-  category: Category;
-  confidence: number;
+  // null quando o LLM falha totalmente (não só quando a confiança é baixa).
+  category: Category | null;
+  confidence: number | null;
   source: ClassificationSource;
   reasoning: string | null;
   modelVersion: string | null;
@@ -69,16 +70,10 @@ export interface PatchClassificationInput {
   category: Category;
 }
 
-export interface SpendingByCategory {
-  category: Category;
-  totalAmount: number;
-}
+/** Mapa categoria → total gasto (só soma transações type=debit). Categorias sem gasto ficam de fora. */
+export type SpendingByCategory = Partial<Record<Category, number>>;
 
-/**
- * Contrato provisório enquanto a Fase 5/6 do backend não existe.
- * Cobre os quatro números do spec (acurácia, % sem LLM, latência média, custo)
- * mais o que os cards e o gráfico do dashboard precisam para renderizar.
- */
+/** Contrato real da Fase 6 do backend, confirmado contra a implementação. */
 export interface Metrics {
   accuracy: number | null;
   totalClassified: number;
@@ -86,5 +81,5 @@ export interface Metrics {
   avgLatencyMs: number;
   estimatedCostUsd: number;
   sourceBreakdown: Record<ClassificationSource, number>;
-  spendingByCategory: SpendingByCategory[];
+  spendingByCategory: SpendingByCategory;
 }

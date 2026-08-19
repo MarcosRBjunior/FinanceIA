@@ -3,11 +3,18 @@ import type { SpendingByCategory } from '../types/api';
 import { formatBRL } from '../lib/format';
 
 interface CategorySpendingChartProps {
-  data: SpendingByCategory[];
+  data: SpendingByCategory;
+}
+
+interface ChartEntry {
+  category: string;
+  totalAmount: number;
 }
 
 export function CategorySpendingChart({ data }: CategorySpendingChartProps) {
-  const sorted = [...data].sort((a, b) => b.totalAmount - a.totalAmount);
+  const sorted: ChartEntry[] = Object.entries(data)
+    .map(([category, totalAmount]) => ({ category, totalAmount: totalAmount ?? 0 }))
+    .sort((a, b) => b.totalAmount - a.totalAmount);
 
   return (
     <div className="rounded-lg border border-neutral-200 bg-white p-4 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
