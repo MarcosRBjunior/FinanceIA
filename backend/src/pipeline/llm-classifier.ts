@@ -24,7 +24,7 @@ export interface LlmClassificationResult extends ClassificationOutput {
   modelVersion: string;
 }
 
-export type LlmFailureReason = 'invalid_response' | 'timeout' | 'rate_limited';
+export type LlmFailureReason = 'invalid_response' | 'timeout' | 'rate_limited' | 'request_error';
 
 export class LlmClassificationError extends Error {
   constructor(
@@ -118,7 +118,8 @@ async function callWithBackoff(
       if (isRateLimitError(err)) {
         throw new LlmClassificationError('rate_limited', 'Rate limit persistente (HTTP 429)');
       }
-      throw err;
+      const message = err instanceof Error ? err.message : String(err);
+      throw new LlmClassificationError('request_error', `Falha ao chamar a API do Claude: ${message}`);
     }
   }
 

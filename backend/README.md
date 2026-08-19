@@ -28,9 +28,21 @@ npm run dev
 - [x] Fase 3 — Classificador LLM (testes com SDK mockado; falta validar chamada real — requer `ANTHROPIC_API_KEY` em `.env`)
 - [x] Fase 4 — Orquestrador (`npm run pipeline`; validado ponta a ponta com classificador LLM simulado, já que não há `ANTHROPIC_API_KEY` real neste ambiente — grava 150/150 em `classifications`, cache se auto-popula)
 - [x] Fase 5 — Harness de avaliação (scripts prontos; **rotulagem manual pendente** — ver seção Avaliação abaixo)
-- [ ] Fase 6 — API REST
+- [x] Fase 6 — API REST
 - [ ] Fase 7 — Dashboard (frontend, em andamento na branch `dev`)
 - [ ] Fase 8 — Fechamento
+
+## API (Fase 6)
+
+| Rota | Descrição |
+|---|---|
+| `POST /transactions` | Cria uma transação e classifica na hora. Body: `{ description, amount, transactionDate, type }` |
+| `POST /transactions/batch` | Idem, em lote. Body: `{ transactions: [...] }` (máx. 500) |
+| `GET /classifications?needs_review=true` | Lista classificações, cada item com `transaction` aninhado. Filtro opcional por `needs_review` |
+| `PATCH /classifications/:id` | Correção humana. Body: `{ category }` — grava `source: "human"`, `needsReview: false` e realimenta o `merchant_cache` |
+| `GET /metrics` | `{ accuracy, totalClassified, resolvedWithoutLlmPct, avgLatencyMs, estimatedCostUsd, sourceBreakdown, spendingByCategory }` |
+
+`accuracy` vem de `eval_labels` (Fase 5) e é `null` enquanto não houver rótulos importados. CORS liberado (`origin: true`) para o frontend em dev.
 
 ## Avaliação (Fase 5)
 
