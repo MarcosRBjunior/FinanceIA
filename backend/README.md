@@ -23,8 +23,8 @@ npm run dev
 ## Status
 
 - [x] Fase 0 — Fundação
-- [ ] Fase 1 — Schema e dados
-- [ ] Fase 2 — Normalizador e motor de regras
+- [x] Fase 1 — Schema e dados
+- [x] Fase 2 — Normalizador e motor de regras (regras resolvem 92.7% das 150 transações do seed)
 - [ ] Fase 3 — Classificador LLM
 - [ ] Fase 4 — Orquestrador
 - [ ] Fase 5 — Harness de avaliação
