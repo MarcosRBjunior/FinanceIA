@@ -57,7 +57,7 @@ Camadas 1–3 são gratuitas e instantâneas — só o que sobra vai para o LLM.
 
 ## Como rodar
 
-Backend e frontend estão em worktrees/branches separados enquanto em desenvolvimento: backend na branch `specs` (pasta `backend/`), frontend na branch `dev` (pasta `frontend/`). Ainda não há merge para `main`.
+Backend e frontend vivem juntos neste repositório (`backend/` e `frontend/`).
 
 ### Backend
 
@@ -91,6 +91,9 @@ npm run eval
 
 ```bash
 cd frontend
+cp .env.example .env
+# defina VITE_API_BASE_URL=http://localhost:3000 para consumir a API real
+# (deixe vazio para rodar com o client mock em memória)
 npm install
 npm run dev   # dashboard em http://localhost:5173
 ```
@@ -101,7 +104,7 @@ Detalhes de cada endpoint da API em `backend/README.md`.
 
 ![Dashboard do Classificador de Transações](docs/dashboard.jpg)
 
-Dashboard (Fase 7) rodando com o client mock do frontend — cards de métricas, gráfico de gastos por categoria e fila de revisão com correção em um clique. Ainda não há screenshot contra a API real porque backend e frontend estão em branches separadas sem merge.
+Dashboard (Fase 7) rodando com o client mock do frontend — cards de métricas, gráfico de gastos por categoria e fila de revisão com correção em um clique. Validado localmente também contra a API real (backend + frontend integrados no mesmo repositório); screenshot contra dados reais pendente de atualização.
 
 ## Resultados da avaliação
 
@@ -126,5 +129,5 @@ Reproduzir: `npm run eval:export` → rotular o CSV → `npm run eval:import -- 
 | 4 — Orquestrador | ✅ |
 | 5 — Harness de avaliação | ✅ 100 transações rotuladas, 87% de acurácia (96,7% excluindo casos que dependem de LLM sem API key) |
 | 6 — API REST | ✅ |
-| 7 — Dashboard | 🔄 em andamento (branch `dev`) |
-| 8 — Fechamento | 🔄 README, CI (verde), diagrama e avaliação real prontos; falta só o merge para `main` |
+| 7 — Dashboard | ✅ integrado e validado contra a API real |
+| 8 — Fechamento | 🔄 README, CI, diagrama e avaliação prontos; falta screenshot contra dados reais e publicação em `main` |
