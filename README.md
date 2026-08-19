@@ -97,6 +97,12 @@ npm run dev   # dashboard em http://localhost:5173
 
 Detalhes de cada endpoint da API em `backend/README.md`.
 
+## Screenshots
+
+![Dashboard do Classificador de Transações](docs/dashboard.jpg)
+
+Dashboard (Fase 7) rodando com o client mock do frontend — cards de métricas, gráfico de gastos por categoria e fila de revisão com correção em um clique. Ainda não há screenshot contra a API real porque backend e frontend estão em branches separadas sem merge.
+
 ## Resultados da avaliação
 
 O harness de avaliação (Fase 5) está pronto (`npm run eval`), mas a rotulagem manual das 100 transações em `eval_labels` ainda não foi feita — os números de acurácia dependem desse trabalho humano e serão preenchidos aqui assim que estiver pronto.
@@ -117,4 +123,4 @@ O que já dá pra medir sem rotulagem (execução determinística sobre o seed a
 | 5 — Harness de avaliação | ✅ scripts prontos, rotulagem manual pendente |
 | 6 — API REST | ✅ |
 | 7 — Dashboard | 🔄 em andamento (branch `dev`) |
-| 8 — Fechamento | 🔄 este README, CI e diagrama; falta screenshots e resultados reais de avaliação |
+| 8 — Fechamento | 🔄 README, CI (verde) e diagrama prontos; falta merge para `main` e resultados reais de avaliação |
