@@ -49,8 +49,8 @@ export const classifications = pgTable('classifications', {
   transactionId: integer('transaction_id')
     .notNull()
     .references(() => transactions.id),
-  category: categoryEnum('category').notNull(),
-  confidence: real('confidence').notNull(),
+  category: categoryEnum('category'),
+  confidence: real('confidence'),
   source: classificationSourceEnum('source').notNull(),
   reasoning: text('reasoning'),
   modelVersion: text('model_version'),
