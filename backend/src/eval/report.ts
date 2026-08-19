@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { desc } from 'drizzle-orm';
 import { db } from '../db/client.js';
-import { classifications, evalLabels, transactions } from '../db/schema.js';
+import { classifications, evalLabels } from '../db/schema.js';
 
 // Preço aproximado do Claude Sonnet (USD por milhão de tokens), só para estimativa de custo.
 const PRICE_PER_MILLION_INPUT = 3;
@@ -33,9 +33,6 @@ async function main() {
       latestByTransaction.set(c.transactionId, c);
     }
   }
-
-  const allTransactions = await db.select().from(transactions);
-  const txById = new Map(allTransactions.map((t) => [t.id, t]));
 
   let correct = 0;
   let evaluated = 0;

@@ -109,4 +109,14 @@ describe('classifyWithLlm', () => {
       reason: 'timeout',
     });
   });
+
+  it('encapsula erros inesperados (ex.: API key ausente) como LlmClassificationError em vez de vazar', async () => {
+    const create = vi
+      .fn()
+      .mockRejectedValue(new Error('Could not resolve authentication method'));
+
+    await expect(classifyWithLlm('DESCRITOR W', fakeClient(create))).rejects.toMatchObject({
+      reason: 'request_error',
+    });
+  });
 });
