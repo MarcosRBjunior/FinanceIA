@@ -17,7 +17,10 @@
     "db:migrate": "drizzle-kit migrate",
     "seed": "tsx src/db/seed.ts",
     "measure:rules": "tsx src/pipeline/measure-rules.ts",
-    "pipeline": "tsx src/pipeline/run-pipeline.ts"
+    "pipeline": "tsx src/pipeline/run-pipeline.ts",
+    "eval:export": "tsx src/eval/export-labels-csv.ts",
+    "eval:import": "tsx src/eval/import-labels-csv.ts",
+    "eval": "tsx src/eval/report.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",
