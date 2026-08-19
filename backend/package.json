@@ -15,7 +15,8 @@
     "test": "vitest run",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "seed": "tsx src/db/seed.ts"
+    "seed": "tsx src/db/seed.ts",
+    "measure:rules": "tsx src/pipeline/measure-rules.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",
