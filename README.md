@@ -130,4 +130,4 @@ Reproduzir: `npm run eval:export` → rotular o CSV → `npm run eval:import -- 
 | 5 — Harness de avaliação | ✅ 100 transações rotuladas, 87% de acurácia (96,7% excluindo casos que dependem de LLM sem API key) |
 | 6 — API REST | ✅ |
 | 7 — Dashboard | ✅ integrado e validado contra a API real |
-| 8 — Fechamento | 🔄 README, CI, diagrama, avaliação e screenshot contra dados reais prontos; falta só a publicação em `main` |
+| 8 — Fechamento | ✅ |
