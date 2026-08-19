@@ -7,12 +7,12 @@ import type {
 } from '../../types/api';
 import type { ApiClient } from './client';
 
-/**
- * Implementação real contra a API REST da Fase 6 do spec. Ainda não foi
- * exercitada contra o backend de verdade — os endpoints e formatos aqui
- * seguem o contrato passado por mensagem, e podem precisar de ajuste fino
- * quando a Fase 6 estiver pronta (nomes de campos, envelope de resposta, etc).
- */
+interface ApiErrorBody {
+  error?: string;
+  details?: unknown;
+}
+
+/** Implementação real contra a API REST da Fase 6, confirmada contra o backend. */
 export function createHttpApiClient(baseUrl: string): ApiClient {
   async function request<T>(path: string, init?: RequestInit): Promise<T> {
     const res = await fetch(`${baseUrl}${path}`, {
@@ -23,7 +23,11 @@ export function createHttpApiClient(baseUrl: string): ApiClient {
       },
     });
     if (!res.ok) {
-      throw new Error(`${init?.method ?? 'GET'} ${path} falhou: ${res.status} ${res.statusText}`);
+      const body = (await res.json().catch(() => null)) as ApiErrorBody | null;
+      const detail = body?.error ? `: ${body.error}` : '';
+      throw new Error(
+        `${init?.method ?? 'GET'} ${path} falhou (${res.status})${detail}`,
+      );
     }
     return (await res.json()) as T;
   }
@@ -35,11 +39,15 @@ export function createHttpApiClient(baseUrl: string): ApiClient {
         body: JSON.stringify(input),
       });
     },
-    createTransactionsBatch(inputs: CreateTransactionInput[]) {
-      return request<CreateTransactionResult[]>('/transactions/batch', {
-        method: 'POST',
-        body: JSON.stringify(inputs),
-      });
+    async createTransactionsBatch(inputs: CreateTransactionInput[]) {
+      const { created } = await request<{ created: CreateTransactionResult[] }>(
+        '/transactions/batch',
+        {
+          method: 'POST',
+          body: JSON.stringify({ transactions: inputs }),
+        },
+      );
+      return created;
     },
     listClassificationsNeedingReview() {
       return request<ClassificationWithTransaction[]>('/classifications?needs_review=true');

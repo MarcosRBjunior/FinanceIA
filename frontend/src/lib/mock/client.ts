@@ -109,17 +109,22 @@ export function createMockApiClient(): ApiClient {
       }
 
       const resolvedWithoutLlm = sourceBreakdown.cache + sourceBreakdown.rules;
-      const spendingByCategory = CATEGORIES.map((category) => ({
-        category,
-        totalAmount: rows
-          .filter((row) => row.classification.category === category && row.transaction.amount < 0)
-          .reduce((sum, row) => sum + Math.abs(row.transaction.amount), 0),
-      })).filter((entry) => entry.totalAmount > 0);
+      const spendingByCategory: Metrics['spendingByCategory'] = {};
+      for (const category of CATEGORIES) {
+        const categoryTotal = rows
+          .filter(
+            (row) => row.classification.category === category && row.transaction.type === 'debit',
+          )
+          .reduce((sum, row) => sum + Math.abs(row.transaction.amount), 0);
+        if (categoryTotal > 0) {
+          spendingByCategory[category] = categoryTotal;
+        }
+      }
 
       return {
-        // Placeholder: acurácia real vem do harness de avaliação (Fase 5), que
-        // ainda não existe — este número é ilustrativo pra dar forma ao card.
-        accuracy: 0.913,
+        // null até a Fase 5 (harness de avaliação) importar eval_labels — mesmo
+        // comportamento da API real hoje.
+        accuracy: null,
         totalClassified: total,
         resolvedWithoutLlmPct: total > 0 ? resolvedWithoutLlm / total : 0,
         avgLatencyMs: latencyCount > 0 ? Math.round(latencySum / latencyCount) : 0,

@@ -13,7 +13,7 @@ export function ReviewQueue({ items, onCorrect }: ReviewQueueProps) {
   const [selected, setSelected] = useState<Record<string, Category>>({});
 
   async function handleSave(item: ClassificationWithTransaction) {
-    const category = selected[item.id] ?? item.category;
+    const category = selected[item.id] ?? item.category ?? 'Outros';
     setPendingId(item.id);
     try {
       await onCorrect(item.id, category);
@@ -46,14 +46,15 @@ export function ReviewQueue({ items, onCorrect }: ReviewQueueProps) {
                   {item.transaction.description}
                 </p>
                 <p className="text-xs text-neutral-400">
-                  {formatBRL(item.transaction.amount)} · sugestão: {item.category} (
-                  {formatPercent(item.confidence)})
+                  {formatBRL(item.transaction.amount)} · sugestão:{' '}
+                  {item.category ?? 'não classificado (falha do LLM)'}
+                  {item.confidence != null && ` (${formatPercent(item.confidence)})`}
                 </p>
               </div>
 
               <select
                 className="rounded-md border border-neutral-300 bg-white px-2 py-1 text-sm dark:border-neutral-700 dark:bg-neutral-800"
-                value={selected[item.id] ?? item.category}
+                value={selected[item.id] ?? item.category ?? 'Outros'}
                 onChange={(e) =>
                   setSelected((prev) => ({ ...prev, [item.id]: e.target.value as Category }))
                 }
